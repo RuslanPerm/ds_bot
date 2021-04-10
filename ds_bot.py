@@ -3,7 +3,7 @@ import requests
 from googletrans import Translator
 import asyncio
 
-TOKEN = 'e38323e9cd692142026e5c1a6b1f56436a7df01bb5ad44d582f4fdb29908eeb0'
+TOKEN = 'ODMwMzkzNzIxMzk2MjY0OTkw.YHGCaw.9pbGlP5MsNURXPFXAkRjQwcMKLc'
 
 
 class QuakeReq():
@@ -34,22 +34,6 @@ class QuakeReq():
             return (f'Name: {self.name}\n \n'
                     f'Duel: {self.duel_rating}±{self.duel_deviation} (Games: {self.duel_gamescount})\n')
 
-
-class WeatherReq():
-    def __init__(self, city):
-        self.API = '2c6c62ecc0d20abf473f5b3274545e06'
-        self.req = requests.get(f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.API}')
-
-    def m_info(self):
-        if self.req.status_code == 500:
-            return 'Не могу найти это место'
-        else:
-            wth = self.req.json()
-            print(wth)
-            return (f'{wth["name"]}, {wth["sys"]["country"]}: '
-                    f'{wth["main"]["temp"]}*F, {wth["weather"][0]["main"]}')
-
-
 class DisBot(discord.Client):
     async def on_ready(self):
         print(f"{self.user} в Discord'е!")
@@ -64,7 +48,6 @@ class DisBot(discord.Client):
     async def on_message(self, message):
         if message.content.lower() == '!help':
             await message.channel.send('''*!help* - помощь по командам
-                                            *!wth {city}* - погода сейчас
                                             *!trans/!text* - перевести из {src} языка в {dest} язык
                                             *!set_timer {time in hours} часов {time in minutes} минут* - таймер''')
         elif message.content.startswith('!trans'):
@@ -93,10 +76,6 @@ class DisBot(discord.Client):
         elif message.content.lower().startswith('!qcs'):
             qcs = QuakeReq(message.content[5:])
             await message.channel.send(qcs.full_info())
-
-        elif message.content.lower().startswith('!wth'):
-            wth = WeatherReq(message.content[5:])
-            await message.channel.send(wth.m_info())
 
 
 client = DisBot()
