@@ -65,24 +65,13 @@ class DisBot(discord.Client):
         if message.content.lower() == '!help':
             await message.channel.send('''*!help* - помощь по командам
             *!wth {город}* - погода сейчас
-            *!trans/!text* - перевести из {язык1} в {язык2} язык
             *!set_timer {часы} часов {минуты} минут* - таймер''')
-        elif message.content.startswith('!trans'):
-            needtotr = message.content[6:]
-            translator = Translator()
-            translated_one = translator.translate(needtotr, dest='ru').text
-            await message.channel.send(translated_one)
 
         elif message.content.startswith('!change'):
             self.ln_src = message.content[8:10]
             self.ln_dest = message.content[11:13]
             await message.channel.send(f'{self.ln_src}-{self.ln_dest} выбраны')
 
-        elif message.content.startswith('!text'):
-            needtotr = message.content[5:]
-            translator = Translator()
-            translated_one = translator.translate(needtotr, src=self.ln_src, dest=self.ln_dest).text
-            await message.channel.send(translated_one)
 
         elif message.content.lower().startswith('!set_timer'):
             hours, minutes = int(message.content.split()[2]), int(message.content.split()[4])
