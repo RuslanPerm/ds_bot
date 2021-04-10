@@ -64,9 +64,9 @@ class DisBot(discord.Client):
     async def on_message(self, message):
         if message.content.lower() == '!help':
             await message.channel.send('''*!help* - помощь по командам
-                                            *!wth {city}* - погода сейчас
-                                            *!trans/!text* - перевести из {src} языка в {dest} язык
-                                            *!set_timer {time in hours} часов {time in minutes} минут* - таймер''')
+            *!wth {город}* - погода сейчас
+            *!trans/!text* - перевести из {язык1} в {язык2} язык
+            *!set_timer {часы} часов {минуты} минут* - таймер''')
         elif message.content.startswith('!trans'):
             needtotr = message.content[6:]
             translator = Translator()
